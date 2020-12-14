@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "9508229b-24ba-434a-a667-e8ba5da047cc",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1530,
+  "height": 1080,
+  "platformSettings": {},
+  "subMetas": {
+    "Tex_WealthManBg": {
+      "ver": "1.0.4",
+      "uuid": "ab719ddb-528f-447f-8154-468c9d7001dc",
+      "rawTextureUuid": "9508229b-24ba-434a-a667-e8ba5da047cc",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1530,
+      "height": 1080,
+      "rawWidth": 1530,
+      "rawHeight": 1080,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

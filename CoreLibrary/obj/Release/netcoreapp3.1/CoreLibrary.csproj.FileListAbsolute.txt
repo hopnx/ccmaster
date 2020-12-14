@@ -1,0 +1,9 @@
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\bin\Release\netcoreapp3.1\CoreLibrary.deps.json
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\bin\Release\netcoreapp3.1\CoreLibrary.dll
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\bin\Release\netcoreapp3.1\CoreLibrary.pdb
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Release\netcoreapp3.1\CoreLibrary.csprojAssemblyReference.cache
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Release\netcoreapp3.1\CoreLibrary.AssemblyInfoInputs.cache
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Release\netcoreapp3.1\CoreLibrary.AssemblyInfo.cs
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Release\netcoreapp3.1\CoreLibrary.csproj.CoreCompileInputs.cache
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Release\netcoreapp3.1\CoreLibrary.dll
+D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Release\netcoreapp3.1\CoreLibrary.pdb

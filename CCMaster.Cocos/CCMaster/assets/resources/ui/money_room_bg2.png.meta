@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "2545e30c-a95d-46cd-99c3-354e4b9e08fa",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 428,
+  "height": 482,
+  "platformSettings": {},
+  "subMetas": {
+    "money_room_bg2": {
+      "ver": "1.0.4",
+      "uuid": "edfc7c61-200e-4111-a272-dff9ad6f38bc",
+      "rawTextureUuid": "2545e30c-a95d-46cd-99c3-354e4b9e08fa",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0.5,
+      "trimX": 2,
+      "trimY": 0,
+      "width": 424,
+      "height": 481,
+      "rawWidth": 428,
+      "rawHeight": 482,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

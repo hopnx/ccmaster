@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "a662e502-254c-4aa9-90ca-82269791d433",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 548,
+  "height": 258,
+  "platformSettings": {},
+  "subMetas": {
+    "luck_money_open_inner_bg": {
+      "ver": "1.0.4",
+      "uuid": "3b91644f-5b48-4a16-b24a-33cbf8584770",
+      "rawTextureUuid": "a662e502-254c-4aa9-90ca-82269791d433",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 548,
+      "height": 258,
+      "rawWidth": 548,
+      "rawHeight": 258,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

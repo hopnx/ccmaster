@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "accadbea-8239-47b1-bf3e-cbaf99c8757b",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 80,
+  "height": 80,
+  "platformSettings": {},
+  "subMetas": {
+    "UI_Load_MYPass_Account": {
+      "ver": "1.0.4",
+      "uuid": "b3954c13-9dc4-4533-8976-4a8e3411a92f",
+      "rawTextureUuid": "accadbea-8239-47b1-bf3e-cbaf99c8757b",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 2,
+      "trimY": 2,
+      "width": 76,
+      "height": 76,
+      "rawWidth": 80,
+      "rawHeight": 80,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
