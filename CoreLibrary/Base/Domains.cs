@@ -12,6 +12,7 @@ namespace CoreLibrary.Base
     }
     public class BaseResult
     {
+        public Guid Id { get; set; }
         public string Description { get; set; }
     }
     public class BaseResponse<T> : IBaseResponse

@@ -1,8 +1,10 @@
 {
   "title": "CCMaster",
   "packageName": "org.cocos2d.demo",
-  "startScene": "3ab166c2-31a9-480d-a8a8-60594bb5c06d",
-  "excludeScenes": [],
+  "startScene": "fa101dcb-4e8d-4dc8-8ba3-bd12846d2139",
+  "excludeScenes": [
+    "3ab166c2-31a9-480d-a8a8-60594bb5c06d"
+  ],
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,

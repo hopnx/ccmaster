@@ -44,11 +44,7 @@ namespace CCMaster.API.Services
         {
             if (_dicPlayer.ContainsKey(playerId))
                 return _dicPlayer.GetValueOrDefault(playerId);
-
-            Player player = await LoadPlayerFromCache(playerId);
-            if (player == null)
-                player = await LoadPlayerFromMongoDB(playerId); 
-            return player;
+            else return await LoadPlayerFromMongoDB(playerId);
         }
         private async Task<Player> LoadPlayerFromCache(Guid id)
         {
@@ -66,7 +62,6 @@ namespace CCMaster.API.Services
             if (player != null)
             {
                 SavePlayerToCache(player);
-                _dicPlayer.Add(player.Id, player);
             }
             return player;
         }
@@ -101,7 +96,7 @@ namespace CCMaster.API.Services
         {
             if (player != null)
             {
-                player.Rank = _gameConfigService.GetRank(player.Score).Name;
+                player.RankLabel = _gameConfigService.GetRank(player.Score).RankLabel;
                 SavePlayerToCache(player);
                 SavePlayerToMongoDB(player);
             }
@@ -116,13 +111,17 @@ namespace CCMaster.API.Services
         }
         public Player CreatePlayer(Account account)
         {
+            DORankDefinition def = _gameConfigService.GetRank(GameConfigService.START_SCORE);
             Player player = new Player
             {
                 Id = Guid.NewGuid(),
+                AccountId = account.Id,
                 Name = account.UserName,
-                Score = 1600,
-                Coin = 10000,
-                Rank = _gameConfigService.GetRank(1600).Name,
+                Score = GameConfigService.START_SCORE,
+                Coin = GameConfigService.START_COIN,
+                RankLabel = def.RankLabel,
+                RankIndex = def.RankIndex,
+                StarIndex = def.StarIndex,
                 TotalDraw = 0,
                 TotalGame = 0,
                 TotalLose = 0,

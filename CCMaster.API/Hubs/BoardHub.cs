@@ -27,7 +27,7 @@ namespace CCMaster.API.Hubs
         public Task ReplyDrawOffer(BaseResponse<BaseResult> response);
         public Task ReceiveDrawOffer(BaseResponse<BaseResult> response);
 
-
+        public Task ReceiveGame(BaseResponse<BaseResult> response);
     }
     public class BoardHub : Hub<IBoardHub>
     {
@@ -50,8 +50,14 @@ namespace CCMaster.API.Hubs
         {
             _service = service;
         }
+        public async Task RequestCreateGame(RequestGamePlay request)
+        {
+            request.ConnectionId = Context.ConnectionId;
+            BaseResponse<BaseResult> response = await _service.CreateGame(request);
+            _ = Clients.Clients(request.ConnectionId).ReceiveGame(response);
+        }
 
-        public async Task RequestPlayGame(RequestPlayGame request)
+        public async Task RequestPlayGame(RequestGamePlay request)
         {
             request.ConnectionId = Context.ConnectionId;
             BaseResponse<DOBoard> response = await _service.PlayGame(request);

@@ -35,11 +35,7 @@ var Item = cc.Class({
             this.color = color;
             this.type = type;
         }
-    },
-    setLocation(row, col) {
-        this.row = row || 0;
-        this.col = col || 0;     
-    },
+    },    
     isAlive() {
         return (this.row > 0 && this.col > 0);
     },
@@ -74,11 +70,12 @@ var Item = cc.Class({
     },
     //=============================================================================================
     reset(){
-        this.setLocation(0, 0);
         this.deselect();
         this.unaimed();
         this.setPosition(this.zeroPosition);
-        this.setCell(null);
+        this.row = 0;
+        this.col = 0;
+        this.cell = null;
     },
     //============================================================================================
     select() {

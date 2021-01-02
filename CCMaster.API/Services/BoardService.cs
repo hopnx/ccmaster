@@ -50,7 +50,7 @@ namespace CCMaster.API.Services
             {
                 Id = data.Id,
                 Name = data.Profile.Name,
-                Rank = data.Profile.Rank,
+                Rank = data.Profile.RankLabel,
                 Score = data.Profile.Score,
                 ReadyToPlay = data.ReadyToPlay,
                 TotalTime = data.TotalTime,
@@ -67,8 +67,11 @@ namespace CCMaster.API.Services
             {
                 Id = data.Id,
                 Name = data.Name,
-                Rank = data.Rank,
+                RankLabel = data.RankLabel,
+                RankIndex = data.RankIndex,
+                StarIndex = data.StarIndex,
                 Score = data.Score,
+                Coin = data.Coin,
                 TotalGame = data.TotalGame,
                 TotalWin = data.TotalWin,
                 TotalDraw = data.TotalDraw,
@@ -125,15 +128,20 @@ namespace CCMaster.API.Services
         }
         static public DOItem MapTo(this Item data, bool includeScopes = true)
         {
-            return new DOItem
+            DOItem result =  new DOItem
             {
                 Color = data.Color,
                 Type = data.Type,
                 Row = data.Row,
                 Col = data.Col,
-                IsAlive = data.IsAlive,
-                Scopes = (includeScopes ? data.Scopes : null)
+                Alive = data.IsAlive,
             };
+            if (includeScopes)
+            {
+                result.Scope = new List<DOPosition>();
+                data.Scopes.ForEach(p => result.Scope.Add(new DOPosition { Row = p.Row, Col = p.Col }));
+            }
+            return result;
         }
     }
     public class CheckResult
@@ -167,8 +175,67 @@ namespace CCMaster.API.Services
 
         private readonly Dictionary<Guid, Board> _dicNewBoards;
         private readonly Dictionary<Guid, Board> _dicBoards;
-        
-        public async Task<BaseResponse<DOBoard>> PlayGame(RequestPlayGame request)
+
+        public async Task<BaseResponse<BaseResult>> CreateGame(RequestGamePlay request)
+        {
+            BaseResponse<BaseResult> response = CreateResponse<BaseResult>();
+            try
+            {
+                Player player = await _playerService.GetPlayer(request.PlayerId);
+                if (player == null)
+                {
+                    response.Message = "Người chơi không tồn tại";
+                    return response;
+                }
+                Board board = CreateBoard(player);
+                if (board == null)
+                {
+                    response.Message = "Lỗi: không tạo được bàn chơi mới";
+                    return response;
+                }
+                AddToNewBoardList(board);
+                response.Data.Id = board.Id;
+                response.OK = true;
+            }
+            catch(Exception e)
+            {
+                ExceptionHandle(response, e);
+            }
+            return response;
+        }
+        public async Task<BaseResponse<BaseResult>> FindGame(RequestGamePlay request)
+        {
+            BaseResponse<BaseResult> response = CreateResponse<BaseResult>();
+            try
+            {
+                Player player = await _playerService.GetPlayer(request.PlayerId);
+                if (player == null)
+                {
+                    response.Message = "Người chơi không tồn tại";
+                    return response;
+                }
+                if (_dicNewBoards.Count > 0)
+                {
+                //    Board board = 
+                }
+                Board board = CreateBoard(player);
+                if (board == null)
+                {
+                    response.Message = "Lỗi: không tạo được bàn chơi mới";
+                    return response;
+                }
+                AddToNewBoardList(board);
+                response.Data.Id = board.Id;
+                response.OK = true;
+            }
+            catch (Exception e)
+            {
+                ExceptionHandle(response, e);
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<DOBoard>> PlayGame(RequestGamePlay request)
         {
             BaseResponse<DOBoard> response = CreateResponse<DOBoard>();
             try
@@ -721,7 +788,7 @@ namespace CCMaster.API.Services
 
                 response.Data.Item = new DOItem
                 {
-                    IsAlive = true,
+                    Alive = true,
                     Type = request.FromType,
                     Color = request.FromColor,
                     Row = request.FromRow,
@@ -868,7 +935,7 @@ namespace CCMaster.API.Services
         {
             BaseResponse<DOGameOver> response = CreateResponse<DOGameOver>();
             response.OK = true;
-            board.Status = Board.BLACK_WIN;
+            board.Status = Board.LOSE;
             Player redPlayer = await _playerService.GetPlayer(board.RedPlayer.Id);
             Player blackPlayer = await _playerService.GetPlayer(board.BlackPlayer.Id);
             redPlayer.AddLose(GameConfig.BONUS_SCORE, board.BetCoin);
@@ -877,14 +944,14 @@ namespace CCMaster.API.Services
             _playerService.SavePlayer(blackPlayer);
 
             response.Data.Result = board.Status;//black win 
-
+            /*
             response.Data.RedPlayer = redPlayer.MapTo();
             response.Data.RedPlayer.Score = -GameConfig.BONUS_SCORE;
 
             response.Data.BlackPlayer = blackPlayer.MapTo();
             response.Data.BlackPlayer.Score = GameConfig.BONUS_SCORE;
             response.Data.Description = description;
-
+            */
             Reset(board);
             NotifyForAll(board, response, BoardHub.RECEIVE_GAME_OVER);
         }
@@ -892,7 +959,7 @@ namespace CCMaster.API.Services
         {
             BaseResponse<DOGameOver> response = CreateResponse<DOGameOver>();
             response.OK = true;
-            board.Status = Board.RED_WIN;
+            board.Status = Board.WIN;
             Player redPlayer = await _playerService.GetPlayer(board.RedPlayer.Id);
             Player blackPlayer = await _playerService.GetPlayer(board.BlackPlayer.Id);
             redPlayer.AddWin(GameConfig.BONUS_SCORE, board.BetCoin);
@@ -902,12 +969,14 @@ namespace CCMaster.API.Services
 
             response.Data.Result = board.Status;
 
+            /*
             response.Data.RedPlayer = redPlayer.MapTo();
             response.Data.RedPlayer.Score = GameConfig.BONUS_SCORE;
 
             response.Data.BlackPlayer = blackPlayer.MapTo();
             response.Data.BlackPlayer.Score = -GameConfig.BONUS_SCORE;
             response.Data.Description = description;
+            */
             Reset(board);
             NotifyForAll(board, response, BoardHub.RECEIVE_GAME_OVER);
         }
@@ -921,6 +990,7 @@ namespace CCMaster.API.Services
             Player redPlayer = await _playerService.GetPlayer(board.RedPlayer.Id);
             redPlayer.AddDraw();
             _playerService.SavePlayer(redPlayer);
+            /*
             response.Data.RedPlayer = redPlayer.MapTo();
             response.Data.RedPlayer.Score = 0;
 
@@ -930,6 +1000,7 @@ namespace CCMaster.API.Services
             response.Data.BlackPlayer = blackPlayer.MapTo();
             response.Data.BlackPlayer.Score = 0;
             response.Data.Description = description;
+            */
             Reset(board);
             NotifyForAll(board, response, BoardHub.RECEIVE_GAME_OVER);
         }

@@ -29,6 +29,7 @@ namespace CCMaster.API.Models
     }
     public class BoardStatus
     {
+        public const string LOCKED = "Locked";
         public const string NEW = "New";
         public const string READY = "Ready";
         public const string START_GAME = "StartGame";
@@ -533,9 +534,11 @@ namespace CCMaster.API.Models
         public int BetCoin { get; set; }
         public Dictionary<Guid,PlayerInBoard> Observers { get; set; }
         public string Result { get; set; }
-        public static string RED_WIN = "RED_WIN";
-        public static string BLACK_WIN = "BLACK_WIN";
-        public static string DRAW = "DRAW";
+        public static string RED_WIN = "red_win";
+        public static string BLACK_WIN = "black_win";
+        public static string WIN = "win";
+        public static string LOSE = "lose";
+        public static string DRAW = "draw";
         public List<Item> Items { get; private set; }
         public HashSet<Position> redScopes { get; private set; }
         public HashSet<Position> blackScopes { get; private set; }

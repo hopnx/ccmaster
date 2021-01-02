@@ -32,17 +32,19 @@ namespace CCMaster.API.Domains
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Rank { get; set; }
+        public string RankLabel { get; set; }
+        public int RankIndex { get; set; }
+        public int StarIndex { get; set; }
         public int Score { get; set; }
+        public int Coin { get; set; }
         public int TotalGame { get; set; }
         public int TotalWin { get; set; }
         public int TotalLose { get; set; }
         public int TotalDraw { get; set; }
     }
-    public class DOAccount
+    public class DOLoginResult
     {
         public Guid Id {get;set;}
-        public string UserName { get; set; }
-        public virtual DOPlayer Player { get; set; }
+        public Guid  PlayerId { get; set; }
     }
 }

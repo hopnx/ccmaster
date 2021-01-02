@@ -24,8 +24,4 @@ namespace CCMaster.API.Domains
         public string Room { get; set; }
         public Guid BoardId { get; set; }
     }
-    public class RequestPlayGame : BaseRequest
-    {
-        public Guid PlayerId { get; set; }
-    }
 }

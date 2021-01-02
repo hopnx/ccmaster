@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SOURCE_CODE\\NetCoreSolution\\CCMaster.API\\CCMaster.API.csproj": {}
+    "D:\\GITHUBs\\ccmaster\\CCMaster.API\\CCMaster.API.csproj": {}
   },
   "projects": {
-    "D:\\SOURCE_CODE\\NetCoreSolution\\CCMaster.API\\CCMaster.API.csproj": {
+    "D:\\GITHUBs\\ccmaster\\CCMaster.API\\CCMaster.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SOURCE_CODE\\NetCoreSolution\\CCMaster.API\\CCMaster.API.csproj",
+        "projectUniqueName": "D:\\GITHUBs\\ccmaster\\CCMaster.API\\CCMaster.API.csproj",
         "projectName": "CCMaster.API",
-        "projectPath": "D:\\SOURCE_CODE\\NetCoreSolution\\CCMaster.API\\CCMaster.API.csproj",
+        "projectPath": "D:\\GITHUBs\\ccmaster\\CCMaster.API\\CCMaster.API.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "D:\\SOURCE_CODE\\NetCoreSolution\\CCMaster.API\\obj\\",
+        "outputPath": "D:\\GITHUBs\\ccmaster\\CCMaster.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -27,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "D:\\SOURCE_CODE\\NetCoreSolution\\CoreLibrary\\CoreLibrary.csproj": {
-                "projectPath": "D:\\SOURCE_CODE\\NetCoreSolution\\CoreLibrary\\CoreLibrary.csproj"
+              "D:\\GITHUBs\\ccmaster\\CoreLibrary\\CoreLibrary.csproj": {
+                "projectPath": "D:\\GITHUBs\\ccmaster\\CoreLibrary\\CoreLibrary.csproj"
               }
             }
           }
@@ -81,14 +81,14 @@
         }
       }
     },
-    "D:\\SOURCE_CODE\\NetCoreSolution\\CoreLibrary\\CoreLibrary.csproj": {
+    "D:\\GITHUBs\\ccmaster\\CoreLibrary\\CoreLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SOURCE_CODE\\NetCoreSolution\\CoreLibrary\\CoreLibrary.csproj",
+        "projectUniqueName": "D:\\GITHUBs\\ccmaster\\CoreLibrary\\CoreLibrary.csproj",
         "projectName": "CoreLibrary",
-        "projectPath": "D:\\SOURCE_CODE\\NetCoreSolution\\CoreLibrary\\CoreLibrary.csproj",
+        "projectPath": "D:\\GITHUBs\\ccmaster\\CoreLibrary\\CoreLibrary.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "D:\\SOURCE_CODE\\NetCoreSolution\\CoreLibrary\\obj\\",
+        "outputPath": "D:\\GITHUBs\\ccmaster\\CoreLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",

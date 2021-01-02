@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "O7Wu8Wvzyuz7QrcE3UzGioyzq3LUxXYVGr1G3Y1DKXIyqywMK0zts7x4eYZLejbcMjY93HWWi3Kah4LnTt/sNQ==",
+  "dgSpecHash": "f9jQ5+dFQ3HwryRiiz3KtFcg6WkvN1flzZoypWo56h7QjUk0IVt/bSrbfRCT+qaxu6j3YSIdbknf577O96tnUQ==",
   "success": true,
-  "projectFilePath": "D:\\SOURCE_CODE\\NetCoreSolution\\CoreLibrary\\CoreLibrary.csproj",
+  "projectFilePath": "D:\\GITHUBs\\ccmaster\\CoreLibrary\\CoreLibrary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
   ],

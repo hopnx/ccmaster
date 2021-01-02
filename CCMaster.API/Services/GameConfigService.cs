@@ -22,14 +22,18 @@ namespace CCMaster.API.Services
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public int No { get; set; }
-        public string Name { get; set; }
+        public int RankIndex { get; set; }
+        public string RankLabel { get; set; }
+        public int StarIndex { get; set; }
         public int From { get; set; }
         public int To { get; set; }
     }
     public class DORankDefinition
     {
         public int No { get; set; }
-        public string Name { get; set; }
+        public int RankIndex { get; set; }
+        public string RankLabel { get; set; }
+        public int StarIndex { get; set; }
     }
     public static partial class EntityExtension
     {
@@ -38,12 +42,16 @@ namespace CCMaster.API.Services
             return new DORankDefinition
             {
                 No = data.No,
-                Name = data.Name,
+                RankIndex = data.RankIndex,
+                RankLabel = data.RankLabel,
+                StarIndex = data.StarIndex,
             };
         }
     }
     public class GameConfigService: BaseService, IGameConfigService
     {
+        public const int START_SCORE = 1200;
+        public const int START_COIN = 1000;
         public List<RankDefinition> Ranks { get; private set; }
         public GameConfigService(IDistributedCache cache, IMongoConfiguration mongoConfig) : base(cache, mongoConfig)
         {
@@ -58,27 +66,98 @@ namespace CCMaster.API.Services
         }
         private async void InitRankDefinition()
         {
+            int no = 1;
             Ranks.Add(new RankDefinition
             {
-                No = 1,
-                Name = "Tập sự",
+                No = no++,
                 From = 0,
-                To = 1700,
-            }); 
-            Ranks.Add(new RankDefinition
-            {
-                No = 2,
-                Name = "Kỳ thủ",
-                From = 1701,
-                To = 1800,
+                To = 1399,
+                RankLabel = "Tập sự",
+                RankIndex = 1,
+                StarIndex = 1,
             });
             Ranks.Add(new RankDefinition
             {
-                No=3,
-                Name="Đại sư",
-                From = 1801,
-                To = 3000,
+                No = no++,
+                From = 1400,
+                To = 1499,
+                RankLabel = "Tập sự",
+                RankIndex = 1,
+                StarIndex = 2,
             });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 1500,
+                To = 1599,
+                RankLabel = "Tập sự",
+                RankIndex = 1,
+                StarIndex = 3,
+            });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 1600,
+                To = 1699,
+                RankLabel = "Kỳ thủ",
+                RankIndex = 2,
+                StarIndex = 1,
+            });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 1700,
+                To = 1799,
+                RankLabel = "Kỳ thủ",
+                RankIndex = 2,
+                StarIndex = 2,
+            });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 1800,
+                To = 1899,
+                RankLabel = "Kỳ thủ",
+                RankIndex = 2,
+                StarIndex = 3,
+            });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 1900,
+                To = 1999,
+                RankLabel = "Đại sư",
+                RankIndex = 3,
+                StarIndex = 1,
+            });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 2000,
+                To = 2099,
+                RankLabel = "Đại sư",
+                RankIndex = 3,
+                StarIndex = 2,
+            });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 2100,
+                To = 2199,
+                RankLabel = "Đại sư",
+                RankIndex = 3,
+                StarIndex = 3,
+            });
+            Ranks.Add(new RankDefinition
+            {
+                No = no++,
+                From = 2200,
+                To = 100000,
+                RankLabel = "Kỳ tiên",
+                RankIndex = 3,
+                StarIndex = 3,
+            });
+
             IMongoCollection<RankDefinition> collection = MongoGetCollection<RankDefinition>();
             await collection.InsertManyAsync(Ranks);
         }
@@ -89,7 +168,9 @@ namespace CCMaster.API.Services
                 return new DORankDefinition
                 {
                     No = 0,
-                    Name = "Không xác định",
+                    RankLabel = "Không xác định",
+                    RankIndex = 0,
+                    StarIndex = 0,
                 };
             else
                 return rank.MapTo();

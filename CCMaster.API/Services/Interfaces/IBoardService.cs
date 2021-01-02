@@ -11,7 +11,11 @@ namespace CCMaster.API.Services
 {
     public interface IBoardService
     {
-        public Task<BaseResponse<DOBoard>> PlayGame(RequestPlayGame request);
+        public Task<BaseResponse<BaseResult>> CreateGame(RequestGamePlay request);
+        public Task<BaseResponse<BaseResult>> FindGame(RequestGamePlay request);
+
+
+        public Task<BaseResponse<DOBoard>> PlayGame(RequestGamePlay request);
         public void AddToNewBoardList(Board board);
         public void RemoveFromNewBoardList(Board board);
 

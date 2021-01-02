@@ -18,13 +18,12 @@ namespace CCMaster.API.Services
 {
     public static partial class EntityExtension
     {
-        static public DOAccount MapTo(this Account data)
+        static public DOLoginResult MapTo(this Account data)
         {
-            return new DOAccount
+            return new DOLoginResult
             {
                 Id = data.Id,
-                UserName = data.UserName,
-                Player = data.Player.MapTo()
+                PlayerId = data.PlayerId
             };
         }
     }
@@ -42,9 +41,9 @@ namespace CCMaster.API.Services
             _loginHub = loginHub;
             _playerService = playerService;
         }
-        public async Task<BaseResponse<DOAccount>> Login(RequestLogin request)
+        public async Task<BaseResponse<DOLoginResult>> Login(RequestLogin request)
         {
-            BaseResponse<DOAccount> response = CreateResponse<DOAccount>();
+            BaseResponse<DOLoginResult> response = CreateResponse<DOLoginResult>();
             try
             {
                 //check user
@@ -64,7 +63,7 @@ namespace CCMaster.API.Services
                     {
                         player = _playerService.CreatePlayer(account);
                     }
-                    account.Player = player;
+                    account.PlayerId = player.Id;
                     SaveAccount(account);
                 }
 
@@ -80,6 +79,9 @@ namespace CCMaster.API.Services
                     response.OK = true;
                     response.Message = "Đăng nhập thành công";
                     response.Data = checkAccount.MapTo();
+                    checkAccount.LastLogin = DateTime.Now;
+                    checkAccount.LastLogout = null;
+                    SaveAccount(checkAccount);
                     CheckOnline(request);
                 }
             }
@@ -106,7 +108,7 @@ namespace CCMaster.API.Services
             if (old == null)
                 collection.InsertOneAsync(account);
             else
-                collection.ReplaceOne(acc => acc.Id == account.Id, account);
+                collection.ReplaceOneAsync(acc => acc.Id == account.Id, account);
 
             SetObject(DM_ACCOUNT, account.UserName,account);
         }

@@ -16,23 +16,29 @@ namespace CCMaster.API.Models
         public Guid Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public virtual Player Player { get; set; }
+        public Guid PlayerId { get; set; }
+        public DateTime? LastLogin { get; set; }
+        public DateTime? LastLogout { get; set; }
     }
     
     public class PlayerInfo
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string RankLabel { get; set; }
+        public int RankIndex { get; set; }
+        public int StarIndex { get; set; }
     }
     public class Player
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public Guid AccountId { get; set; }
         public string Name { get; set; }
         public int Score { get; set; }
         public int Coin { get; set; }
-        public string Rank { get; set; }
+        public string RankLabel { get; set; }
+        public int RankIndex { get; set; }
+        public int StarIndex { get; set; }
         public int TotalGame { get; set; }
         public int TotalWin { get; set; }
         public int TotalDraw { get; set; }

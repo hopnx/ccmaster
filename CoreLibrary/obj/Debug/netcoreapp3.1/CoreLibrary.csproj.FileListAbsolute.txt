@@ -7,3 +7,11 @@ D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.d
 D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.pdb
 D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.csproj.CoreCompileInputs.cache
 D:\SOURCE_CODE\NetCoreSolution\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.csprojAssemblyReference.cache
+D:\GITHUBs\ccmaster\CoreLibrary\bin\Debug\netcoreapp3.1\CoreLibrary.deps.json
+D:\GITHUBs\ccmaster\CoreLibrary\bin\Debug\netcoreapp3.1\CoreLibrary.dll
+D:\GITHUBs\ccmaster\CoreLibrary\bin\Debug\netcoreapp3.1\CoreLibrary.pdb
+D:\GITHUBs\ccmaster\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.AssemblyInfoInputs.cache
+D:\GITHUBs\ccmaster\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.AssemblyInfo.cs
+D:\GITHUBs\ccmaster\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.csproj.CoreCompileInputs.cache
+D:\GITHUBs\ccmaster\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.dll
+D:\GITHUBs\ccmaster\CoreLibrary\obj\Debug\netcoreapp3.1\CoreLibrary.pdb

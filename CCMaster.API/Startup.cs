@@ -71,6 +71,7 @@ namespace CCMaster.API
             services.AddSingleton<IPlayerService, PlayerService>();
             services.AddSingleton<IBoardService, BoardService>();
             services.AddSingleton<IGameConfigService, GameConfigService>();
+            services.AddSingleton<IGameService, GameService>();
 
         }
 
@@ -91,6 +92,7 @@ namespace CCMaster.API
                 endpoints.MapHub<LoginHub>(LoginHub.Route);
                 endpoints.MapHub<PlayerHub>(PlayerHub.Route);
                 endpoints.MapHub<BoardHub>(BoardHub.Route);
+                endpoints.MapHub<GameHub>(GameHub.Route);
             });
         }
     }

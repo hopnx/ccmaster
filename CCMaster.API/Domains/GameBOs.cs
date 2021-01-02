@@ -9,6 +9,34 @@ using System.Xml;
 
 namespace CCMaster.API.Domains
 {
+    public class DOGame
+    {
+        public Guid Id { get; set; }
+        public DOGameSide RedPlayer { get; set; }
+        public DOGameSide BlackPlayer { get; set; }
+        public List<DOItem> Items { get; set; }
+        public string Status { get; set; }
+
+    }
+    public class DOGamePlayer
+    {
+        public Guid Id { get; set; }
+        public DOGameSide RedPlayer { get; set; }
+        public DOGameSide BlackPlayer { get; set;}
+    }    
+    public class DOGameSide
+    {
+        public Guid? Id { get; set; }
+        public string Name { get; set; }
+        public string RankLabel { get; set; }
+        public int? RankIndex { get; set; }
+        public int? StarIndex { get; set; }
+        public string Status { get; set; }
+        public double TotalTime { get; set; }
+        public double RemainTime { get; set; }
+        public double MoveTime { get; set; }
+        public double RemainMoveTime { get; set; }
+    }
     public class RequestGamePlay : BaseRequest
     {
         public Guid PlayerId { get; set; }
@@ -74,14 +102,19 @@ namespace CCMaster.API.Domains
         public List<DOItem> Items { get; set; }
         public string Turn { get; set; }
     }
+    public class DOPosition
+    {
+        public int Row { get; set; }
+        public int Col { get; set; }
+    }
     public class DOItem
     {
         public string Color { get; set; }
         public string Type { get; set; }
         public int Row { get; set; }
         public int Col { get; set; }
-        public bool IsAlive { get; set; }
-        public List<Position> Scopes { get; set; }
+        public bool Alive { get; set; }
+        public List<DOPosition> Scope { get; set; }
     }
     public class DOMove
     {
@@ -100,8 +133,7 @@ namespace CCMaster.API.Domains
     public class DOGameOver
     {
         public string Result { get; set; }
-        public DOPlayer RedPlayer { get; set; }
-        public DOPlayer BlackPlayer { get; set; }
+        public int Score { get; set; }
         public string Description { get; set; }
     }
     public class RequestAcceptDraw: RequestGamePlay

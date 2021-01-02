@@ -1,23 +1,28 @@
-const GlobalSettings = require("./GlobalSetting");
-
-cc.Class({
+var MessageManager = cc.Class({
     extends: cc.Component,
     properties: {
-
     },
-   onLoad () {
-   },
-    onStart() {
+    onLoad () {
+        if (this.node.active)
+            this.node.active = false;
+        this.node.on(cc.Node.EventType.MOUSE_UP,this.hide.bind(this));
+        this.node.on(cc.Node.EventType.TOUCH_START,this.hide.bind(this));
     },
-    show(message) {
-        let label = this.node.getChildByName("text");
-        if (label)
-            label.getComponent(cc.Label).string = message;
+    show(message,seconds,callback){
+        this.labelNode = this.node.getChildByName("Label");
+        if (this.labelNode){
+            this.label = this.labelNode.getComponent(cc.Label);      
+        }
+        if (this.label)
+            this.label.string = message;
         this.node.active = true;
-        this.node.on(cc.Node.EventType.MOUSE_UP, this.hide.bind(this));   
+        this.scheduleOnce(this.hide.bind(this,callback),seconds||2);
     },
-    hide() {
+    hide(callback){
         this.node.active = false;
-    }
-    // update (dt) {},
+        if (this.label)
+            this.label.string = "";
+        if (callback)
+            callback();
+    },
 });

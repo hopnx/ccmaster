@@ -1,92 +1,119 @@
-let cm = require('ConnectionManager');
+let CM = require('ConnectionManager');
 let GLOBAL = require('GlobalSetting');
 
 var PlayerProfile = cc.Class({
     extends: cc.Component,
     statics: {
-        current:null,
-        url: GLOBAL.Host + '/hubs/player',
-        commands: {
-            REQUEST_PROFILE: 'RequestPlayerInfo',
-        }        
     },
     properties: {
-       
+
     },
-    ctor: function(){
-        this.init();
-    },
-    onLoad () {
-    },
-    init(){
-        let listener = [
-            {
-                event: 'ReceivePlayerInfo',
-                handler: this.show.bind(this)
-            }
-        ];
-        if (!this.connection){
-            this.connection = cm.createConnection(PlayerProfile.url, listener);
+    ctor:function(){
+        this.commands = {
+            REQUEST_PROFILE: 'RequestPlayerInfo',
         }
+        let listener = [
+            { event: 'ReceivePlayerInfo', handler: this.show.bind(this) }
+        ];
+        this.connection = CM.createConnection(GLOBAL.Host + '/hubs/player', listener);
     },
-    request(playerId){
+    onLoad() {
+        this.node.active = false;     
+    },
+    loadPlayerInfo(playerId) {
         let request = {
             id: playerId
         }
-        cm.sendRequest(this.connection, PlayerProfile.commands.REQUEST_PROFILE, request);
+        CM.sendRequest(this.connection, this.commands.REQUEST_PROFILE, request);
     },
-    show(response){
-        if (!response.ok)
-        {
-            return;
+    show(response) {
+        if (!response.ok) {
+            Global.gameManager.showMessage(response.message);
         }
-        
-        this.playerInfo = {...response.data};
-        
-        let avatar = cc.find("Avatar", this.node);
-        if (avatar) {
-            let noAvatar = avatar.getChildByName("no-avatar");
-            if (noAvatar)
-                noAvatar.active = !this.playerInfo.id;
-            let image = avatar.getChildByName("image");
-            if (image)
-                image.active = this.playerInfo.id;
-        }
+        else
+            this.setPlayerInfo(response.data);
+    },
+    setPlayerInfo(info) {
         //update name
-        let name = cc.find("Name/label", this.node);
-        if (name) {
-            name.getComponent(cc.Label).string = this.playerInfo.name || "";
+        let nodeName = cc.find("info/name/label", this.node);
+        if (nodeName) {
+            let name = nodeName.getComponent(cc.Label);
+            if (name)
+                name.string = info.name;
         }
-        //update level
-        let rank = cc.find("Rank/label", this.node);
-        if (rank)
-            rank.getComponent(cc.Label).string = this.playerInfo.rank;
-        //update statistic
-        let score = cc.find("Score/label", this.node);
-        if (score)
-            score.getComponent(cc.Label).string = this.playerInfo.score;
-      
-       let total = cc.find("Statistic/total/value", this.node);
-            if (total)
-                total.getComponent(cc.Label).string = this.playerInfo.totalGame;
-          
-        let win = cc.find("Statistic/win/value", this.node);
+        let nodeElo = cc.find("info/asset/elo", this.node);
+        if (nodeElo) {
+            let elo = nodeElo.getComponent(cc.Label);
+            if (elo)
+                elo.string = info.score;
+        }
+        let nodeCoin = cc.find("info/asset/coin", this.node);
+        if (nodeCoin) {
+            let coin = nodeCoin.getComponent(cc.Label);
+            if (coin)
+                coin.string = Global.gameManager.getCoinString(info.coin);
+        }
+        let nodeRankLabel = cc.find("rank/label", this.node);
+        if (nodeRankLabel) {
+            let rankLabel = nodeRankLabel.getComponent(cc.Label);
+            if (rankLabel)
+                rankLabel.string = info.rankLabel;
+        }
+        let nodeRankRibbon = cc.find('rank/ribbon', this.node);
+        if (nodeRankRibbon) {
+            for (let i = 0; i < nodeRankRibbon.children.length; i++) {
+                nodeRankRibbon.children[i].active = false;
+            }
+            if (info.rankIndex >= 3)
+                nodeRankRibbon.getChildByName("red").active = true;
+            else
+                if (info.rankIndex == 2)
+                    nodeRankRibbon.getChildByName("orange").active = true;
+                else
+                    nodeRankRibbon.getChildByName("green").active = true;
+        }
+        let nodeStar = cc.find("rank/star", this.node);
+        if (nodeStar) {
+            for (let i = 0; i < nodeStar.children.length; i++) {
+                let star = nodeStar.children[i];
+                star.color = cc.Color.BLACK;
+                star.opacity = 180;
+            }
+            if (info.starIndex >= 1) {
+                let star1 = nodeStar.getChildByName("1");
+                if (star1) {
+                    star1.color = cc.Color.WHITE;
+                    star1.opacity = 255;
+                }
+            }
+            if (info.starIndex >= 2) {
+                let star2 = nodeStar.getChildByName("2");
+                if (star2) {
+                    star2.color = cc.Color.WHITE;
+                    star2.opacity = 255;
+                }
+            }
+            if (info.starIndex >= 3) {
+                let star3 = nodeStar.getChildByName("3");
+                if (star3) {
+                    star3.color = cc.Color.WHITE;
+                    star3.opacity = 255;
+                }
+            }
+        }
+        let win  = cc.find("archive/win/value",this.node);
         if (win)
-            win.getComponent(cc.Label).string = this.playerInfo.totalWin;
-        let draw = cc.find("Statistic/draw/value", this.node);
+            win.getComponent(cc.Label).string = info.totalWin||0;        
+        let draw = cc.find("archive/draw/value",this.node);
         if (draw)
-            draw.getComponent(cc.Label).string = this.playerInfo.totalDraw;
-        let lose = cc.find("Statistic/lose/value", this.node);
+            draw.getComponent(cc.Label).string = info.totalDraw||0;
+        let lose = cc.find("archive/lose/value",this.node);
         if (lose)
-            lose.getComponent(cc.Label).string = this.playerInfo.totalLose;
-        //update ready
-        let ready = cc.find('IsReady',this.node);
-        if (ready){
-            ready.active = (this.playerInfo && this.playerInfo.readyToPlay);
-        }
+            lose.getComponent(cc.Label).string = info.totalLose||0;
+
         this.node.active = true;
     },
-    buttonCloseOnClick(){
+    buttonCloseOnClick() {
         this.node.active = false;
     }
 });

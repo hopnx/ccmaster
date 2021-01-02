@@ -10,7 +10,7 @@ namespace CCMaster.API.Services.Interfaces
 {
     public interface ILoginService
     {
-        public Task<BaseResponse<DOAccount>> Login(RequestLogin request);
+        public Task<BaseResponse<DOLoginResult>> Login(RequestLogin request);
         public BaseResponse<Account> Logout(RequestLogout request);
     }
 }

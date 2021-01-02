@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tIs9OI2S26lwMsUhz1Nmrr0tqnhVtOgr1ZB1tgF6/GUJtRFy4+GkGIRp2L+0z75PDkB6osvpTxdUa8Y4/OgGjw==",
+  "dgSpecHash": "prOkIbo6V+JIk9PxBOblAD0PHTtkW+vQVPG1G4lM8d2cvpG65nImSvzcareGMAHOvkNMtc5tfjCQZCUHETk+KQ==",
   "success": true,
-  "projectFilePath": "D:\\SOURCE_CODE\\NetCoreSolution\\CCMaster.API\\CCMaster.API.csproj",
+  "projectFilePath": "D:\\GITHUBs\\ccmaster\\CCMaster.API\\CCMaster.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\dnsclient\\1.3.1\\dnsclient.1.3.1.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

@@ -19,6 +19,12 @@ cc.Class({
         this.width = this.node.width;
         this.height = this.node.height;
     },
+    inversedRow(){
+        return Board.ROWS - this.row||0 + 1;
+    },
+    inversedCol(){
+        return Board.COLS - this.col||0 + 1;
+    },
     getInfo() {
         return {
             label: this.label,

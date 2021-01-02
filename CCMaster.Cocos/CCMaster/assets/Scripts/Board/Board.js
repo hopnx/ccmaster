@@ -15,7 +15,7 @@ var Board = cc.Class({
         if (this.nodeGamePlay)
             this.gamePlay = this.nodeGamePlay.getComponent("GamePlay");
         this.items = [];
-        this.initCells();
+        this.createCells();
         this.turn = '';
         this.lastHints =[];
     },
@@ -26,7 +26,7 @@ var Board = cc.Class({
             this.dimension = ChessDefinition.COLOR.RED;
     },
     reload() {
-        this.clearCells();
+        this.resetCells();
         let selectCell = this.selectCell.bind(this);
         this.items.forEach(item => {
             let cell = selectCell(item);
@@ -34,39 +34,26 @@ var Board = cc.Class({
                 item.setCell(cell);
         });
     },
-    clearCells() {
+    resetCells() {
         if (!this.cells || this.cells.length === 0)
-            this.initCells();
+            this.createCells();
         else
             this.cells.forEach(cell => {
                 cell.setActive(false);
             });
     },
-    clearItems() {
+    resetItems() {
         this.items.forEach(item => {
-            item.setCell(null);
-            item.setLocation(0, 0);
+            item.reset();
         });
     },
     clear() {
-        this.clearCells();
-        this.clearItems();
-    },
-    reset() {
-        this.items.forEach(item => {
-            item.deselect();
-            item.unaimed();
-        });     
-    },
+        this.resetCells();
+        this.resetItems();
+    },    
     setInfo(info) {
-        if (this.items.length == 0)
-            this.initItems();
-        else {
-            this.items.forEach(item => {
-                item.setCell(null);
-                item.setLocation(0, 0);
-            });
-        }
+        this.resetItems();
+
         this.turn = info.turn;
         let { items } = info;
         if (!items)
@@ -75,7 +62,8 @@ var Board = cc.Class({
         items.forEach(info => {
             let item = pickItem(info.color, info.type);
             if (item) {
-                item.setLocation(info.row, info.col);
+                let cell = this.getCell(info.row,info.col);
+                item.setCell(cell);
             }
         });
         this.reload();
@@ -99,7 +87,7 @@ var Board = cc.Class({
             : this.getCell(Board.ROWS - info.row + 1, Board.COLS - info.col + 1));
     },
     //====================================================================================
-    initCells() {
+    createCells() {
         this.cells = [];
         for (let r = Board.ROWS; r >= 1; r--) {
             for (let c = Board.COLS; c >= 1; c--) {

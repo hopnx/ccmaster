@@ -19,6 +19,9 @@ namespace CCMaster.API.Services
     }
     public class BaseService
     {
+        protected const string MSG_ERROR_INVALID_PLAYER = "Người chơi không tồn tại";
+        protected const string MSG_ERROR_NOT_A_PLAYER = "Bạn không phải là người chơi tại bàn này";
+
         protected IDistributedCache cacheDB;
         protected IMongoClient mongoClient;
         protected IMongoDatabase mongoDB;

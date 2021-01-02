@@ -9,7 +9,7 @@ namespace CCMaster.API.Hubs.Login
 {
     public interface ILoginClient
     {
-        Task ReceiveLogin(BaseResponse<DOAccount> response);
+        Task ReceiveLogin(BaseResponse<DOLoginResult> response);
         Task Disconnect();
     }
 
@@ -24,7 +24,7 @@ namespace CCMaster.API.Hubs.Login
         public async Task RequestLogin(RequestLogin request)
         {
             request.ConnectionId = Context.ConnectionId;
-            BaseResponse<DOAccount> response  = await _service.Login(request);
+            BaseResponse<DOLoginResult> response  = await _service.Login(request);
             _= Clients.Clients(request.ConnectionId).ReceiveLogin(response);
         }
         public void DisconnectClient(string connectionId)
