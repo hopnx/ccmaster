@@ -13,7 +13,7 @@ namespace CCMaster.API.Controllers
     {
         public IActionResult Version()
         {
-            return Ok("Chinese Chess Master version 1.0.1");
+            return Ok("Chess Master version 1.0.0122");
         }
     }
 }
