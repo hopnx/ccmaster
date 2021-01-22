@@ -14,5 +14,6 @@ namespace CCMaster.API.Services
         public Task<Player> GetPlayer(Guid playerId);
         public void SavePlayer(Player player);
         public Player CreatePlayer(Account account);
+        public Player CreatePlayer(SDKAccount account);
     }
 }

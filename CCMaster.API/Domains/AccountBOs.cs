@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace CCMaster.API.Domains
 {
+    public class RequestSDKLogin : BaseRequest
+    {
+        public string Id { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
+    }
     public class RequestLogin:BaseRequest
     {
+        public string Id { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
     }
@@ -45,6 +52,7 @@ namespace CCMaster.API.Domains
     public class DOLoginResult
     {
         public Guid Id {get;set;}
+        public string SDKId { get; set; }
         public Guid  PlayerId { get; set; }
     }
 }

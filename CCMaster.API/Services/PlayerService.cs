@@ -129,7 +129,28 @@ namespace CCMaster.API.Services
             };
             SavePlayer(player);
             return player;
-        }      
+        }
+        public Player CreatePlayer(SDKAccount account)
+        {
+            DORankDefinition def = _gameConfigService.GetRank(GameConfigService.START_SCORE);
+            Player player = new Player
+            {
+                Id = Guid.NewGuid(),
+                SDKId = account.SDKId,
+                Name = account.UserName,
+                Score = GameConfigService.START_SCORE,
+                Coin = GameConfigService.START_COIN,
+                RankLabel = def.RankLabel,
+                RankIndex = def.RankIndex,
+                StarIndex = def.StarIndex,
+                TotalDraw = 0,
+                TotalGame = 0,
+                TotalLose = 0,
+                TotalWin = 0,
+            };
+            SavePlayer(player);
+            return player;
+        }
 
     }
 }

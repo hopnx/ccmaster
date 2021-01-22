@@ -26,9 +26,18 @@ namespace CCMaster.API.Services
                 PlayerId = data.PlayerId
             };
         }
+        static public DOLoginResult MapTo(this SDKAccount data)
+        {
+            return new DOLoginResult
+            {
+                SDKId = data.SDKId,
+                PlayerId = data.PlayerId
+            };
+        }
     }
     public class LoginService : BaseService, ILoginService
     {
+        private readonly string DM_SDK_ACCOUNT = "SDKAccount";
         private readonly string DM_ACCOUNT = "Account";
         private readonly string DM_ONLINE_ACCOUNT = "Online";
         private readonly IHubContext<LoginHub> _loginHub;
@@ -36,7 +45,7 @@ namespace CCMaster.API.Services
         public LoginService(IDistributedCache cache
             , IMongoConfiguration mongoConfig
             , IHubContext<LoginHub> loginHub
-            , IPlayerService playerService) : base(cache,mongoConfig)
+            , IPlayerService playerService) : base(cache, mongoConfig)
         {
             _loginHub = loginHub;
             _playerService = playerService;
@@ -91,6 +100,55 @@ namespace CCMaster.API.Services
             }
             return response;
         }
+        public async Task<BaseResponse<DOLoginResult>> SDKLogin(RequestSDKLogin request)
+        {
+            BaseResponse<DOLoginResult> response = CreateResponse<DOLoginResult>();
+            try
+            {
+                //check user
+                bool userIsExist = await IsExistAsync(DM_SDK_ACCOUNT, request.User);
+                if (!userIsExist)
+                {
+                    //check at mongoDB
+                    IMongoCollection<SDKAccount> collectionSDKAccount = MongoGetCollection<SDKAccount>();
+                    SDKAccount account = collectionSDKAccount.Find(document => document.UserName == request.User).FirstOrDefault();
+                    if (account == null)
+                    {
+                        account = CreateNewSDKAccount(request);
+                    }
+                    IMongoCollection<Player> collectionPlayer = MongoGetCollection<Player>();
+                    Player player = collectionPlayer.Find(doc => doc.Name == account.UserName).FirstOrDefault();
+                    if (player == null)
+                    {
+                        player = _playerService.CreatePlayer(account);
+                    }
+                    account.PlayerId = player.Id;
+                    SaveAccount(account);
+                }
+
+                SDKAccount checkAccount = GetObject<SDKAccount>(DM_SDK_ACCOUNT, request.User);
+                if (!checkAccount.SDKId.Equals(request.Id))
+                {
+                    response.OK = false;
+                    response.Message = "SDK ID không trùng khớp";
+                }
+                else
+                {
+                    response.OK = true;
+                    response.Message = "Đăng nhập thành công";
+                    response.Data = checkAccount.MapTo();
+                    checkAccount.LastLogin = DateTime.Now;
+                    checkAccount.LastLogout = null;
+                    SaveAccount(checkAccount);
+                    CheckOnline(request);
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionHandle(response, e);
+            }
+            return response;
+        }
         private Account CreateNewAccount(RequestLogin request)
         {
             Account account = new Account
@@ -98,6 +156,16 @@ namespace CCMaster.API.Services
                 Id = Guid.NewGuid(),
                 UserName = request.User,
                 Password = Hash.MD5Encode(request.Password)
+            };
+            return account;
+        }
+        private SDKAccount CreateNewSDKAccount(RequestSDKLogin request)
+        {
+            SDKAccount account = new SDKAccount
+            {
+                Id = Guid.NewGuid(),
+                SDKId = request.Id,
+                UserName = request.User,
             };
             return account;
         }
@@ -110,9 +178,33 @@ namespace CCMaster.API.Services
             else
                 collection.ReplaceOneAsync(acc => acc.Id == account.Id, account);
 
-            SetObject(DM_ACCOUNT, account.UserName,account);
+            SetObject(DM_ACCOUNT, account.UserName, account);
+        }
+        private void SaveAccount(SDKAccount account)
+        {
+            IMongoCollection<SDKAccount> collection = MongoGetCollection<SDKAccount>();
+            SDKAccount old = collection.Find(acc => acc.SDKId == account.SDKId).FirstOrDefault();
+            if (old == null)
+                collection.InsertOneAsync(account);
+            else
+                collection.ReplaceOneAsync(acc => acc.SDKId == account.SDKId, account);
+
+            SetObject(DM_SDK_ACCOUNT, account.UserName, account);
         }
         public void CheckOnline(RequestLogin request)
+        {
+            if (IsExist(DM_ONLINE_ACCOUNT, request.User))
+            {
+                string onlineConnectionId = Get(DM_ONLINE_ACCOUNT, request.User);
+                if (!request.ConnectionId.Equals(onlineConnectionId))
+                {
+                    SendToClient(onlineConnectionId, "ReceiveDisconnectCommand");
+                }
+            }
+            int expiredSecond = 300; //5 minutes
+            SetWithExpire(DM_ONLINE_ACCOUNT, request.User, request.ConnectionId, expiredSecond);
+        }
+        public void CheckOnline(RequestSDKLogin request)
         {
             if (IsExist(DM_ONLINE_ACCOUNT, request.User))
             {

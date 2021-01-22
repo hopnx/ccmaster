@@ -26,6 +26,15 @@ namespace CCMaster.API.Models
             else
                 return Color.RED;
         }
+        static public string GetName(string color)
+        {
+            switch (color)
+            {
+                case RED: return "đỏ";
+                case BLACK: return "đen";
+                default: return "unknown";
+            }
+        }
     }
     public class BoardStatus
     {
@@ -55,7 +64,7 @@ namespace CCMaster.API.Models
         public int Col { get; set; }
         public Position Inverse() { return new Position(Board.ROWS - Row + 1, Board.COLS - Col + 1); }
     }
-    public class ItemType
+    static public class ItemType
     {
         public const string KING = "king";
         public const string ADVISOR = "advisor";
@@ -64,6 +73,22 @@ namespace CCMaster.API.Models
         public const string CANON = "canon";
         public const string HORSE = "horse";
         public const string PAWN = "pawn";
+
+        static public string GetName(string type)
+        {
+            switch (type)
+            {
+                case KING: return "Tướng";
+                case ADVISOR: return "Sĩ";
+                case ELEPHANT: return "Tượng";
+                case CHARIOT: return "Xe";
+                case HORSE: return "Mã";
+                case CANON: return "Pháo";
+                case PAWN: return "Tốt";
+                default:
+                    return "unknown";
+            }
+        }
     }
     public class Item
     {

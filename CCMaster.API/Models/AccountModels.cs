@@ -20,7 +20,17 @@ namespace CCMaster.API.Models
         public DateTime? LastLogin { get; set; }
         public DateTime? LastLogout { get; set; }
     }
-    
+    public class SDKAccount
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+        public string SDKId { get; set; }
+        public string UserName { get; set; }
+        public Guid PlayerId { get; set; }
+        public DateTime? LastLogin { get; set; }
+        public DateTime? LastLogout { get; set; }
+    }
     public class PlayerInfo
     {
         public Guid Id { get; set; }
@@ -33,6 +43,7 @@ namespace CCMaster.API.Models
     {
         public Guid Id { get; set; }
         public Guid AccountId { get; set; }
+        public string SDKId { get; set; }
         public string Name { get; set; }
         public int Score { get; set; }
         public int Coin { get; set; }

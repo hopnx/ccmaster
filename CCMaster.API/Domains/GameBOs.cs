@@ -16,22 +16,31 @@ namespace CCMaster.API.Domains
         public DOGameSide BlackPlayer { get; set; }
         public List<DOItem> Items { get; set; }
         public string Status { get; set; }
-
+        public string Turn { get; set; }
+        public string WarningSide { get; set; }
+        public string WarningMessage { get; set; }
     }
     public class DOGamePlayer
     {
         public Guid Id { get; set; }
+        public string Status { get; set; }
+        public string Turn { get; set; }
         public DOGameSide RedPlayer { get; set; }
         public DOGameSide BlackPlayer { get; set;}
+        public string WarningSide { get; set; }
+        public string WarningMessage { get; set; }
     }    
     public class DOGameSide
     {
         public Guid? Id { get; set; }
+        /*
         public string Name { get; set; }
         public string RankLabel { get; set; }
         public int? RankIndex { get; set; }
         public int? StarIndex { get; set; }
+        */
         public string Status { get; set; }
+        public bool IsThinking { get; set; }
         public double TotalTime { get; set; }
         public double RemainTime { get; set; }
         public double MoveTime { get; set; }
@@ -42,6 +51,7 @@ namespace CCMaster.API.Domains
         public Guid PlayerId { get; set; }
         public Guid BoardId { get; set; }
     }
+   
     public class RequestPickItem : RequestGamePlay
     {
         public string Color { get; set; }
@@ -49,6 +59,7 @@ namespace CCMaster.API.Domains
         public int Row { get; set; }
         public int Col { get; set; }
     }
+   
     public class RequestMoveItem : RequestGamePlay
     {
         public string FromColor { get; set; }
@@ -62,6 +73,37 @@ namespace CCMaster.API.Domains
         public int ToCol { get; set; }
     }
 
+    public class RequestPickChessItem : RequestGamePlay
+    {
+        public string Color { get; set; }
+        public int Row { get; set; }
+        public int Col { get; set; }
+    }
+    public class RequestMoveChessItem : RequestGamePlay
+    {
+        public string Color { get; set; }
+        public Position From { get; set; }
+        public Position To { get; set; }
+    }
+    public class DOChessItemMovement
+    {
+        public string Color { get; set; }
+        public string Type { get; set; }
+        public Position From { get; set; }
+        public Position To { get; set; }
+        public DOItemSignature Target { get; set; }
+        public int CheckMateCount { get; set; }
+        public bool IsGameOver { get; set; }
+        public string WarningSide { get; set; }
+        public string WarningMessage { get; set; }
+    }
+    public class DOItemSignature
+    {
+        public string Color { get; set; }
+        public string Type { get; set; }
+        public int Row { get; set; }
+        public int Col { get; set; }
+    }
     public class DOPlayerInBoard
     {
         public Guid Id { get; set; }
@@ -107,6 +149,7 @@ namespace CCMaster.API.Domains
         public int Row { get; set; }
         public int Col { get; set; }
     }
+
     public class DOItem
     {
         public string Color { get; set; }

@@ -42,7 +42,8 @@ namespace CCMaster.API
                 {
                     policy.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins(client.Url)
+                         .SetIsOriginAllowed(origin => true) // allow any origin
+                                                             //.WithOrigins(client.Url)
                         .AllowCredentials();
                 });
             });
@@ -73,8 +74,9 @@ namespace CCMaster.API
             services.AddSingleton<IGameConfigService, GameConfigService>();
             services.AddSingleton<IGameService, GameService>();
 
-        }
+            services.AddSingleton<ICommonService, CommonService>();
 
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -93,6 +95,9 @@ namespace CCMaster.API
                 endpoints.MapHub<PlayerHub>(PlayerHub.Route);
                 endpoints.MapHub<BoardHub>(BoardHub.Route);
                 endpoints.MapHub<GameHub>(GameHub.Route);
+
+                endpoints.MapHub<CommonHub>(CommonHub.Route);
+
             });
         }
     }
